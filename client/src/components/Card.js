@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Currency from 'react-currency-formatter';
 
  class Card extends Component {
     constructor(props) {
@@ -16,14 +17,17 @@ import React, { Component } from 'react';
                     <img src={this.props.book.image} className="card-image" />
                 </div>
                 <div className="description">
-                    {this.props.book.description.substring(0,180)}...
+                    {this.props.book.description.substring(0,180)}... 
                 </div>
                 <div className="footer-card">
                     <div className="actions">
                         <button className="btn-card">
                             Ver mais
-                        </button>
-                    </div>       
+                        </button>                
+                    </div>    
+                    <div className="money">
+                        <Currency quantity={this.props.book.price} decimal="," group="." />
+                    </div>   
                 </div>
             </div>
          )

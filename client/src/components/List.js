@@ -5,14 +5,15 @@ class List extends Component {
     constructor(props) {
         super(props);  
         this.state = {
-            selectedAuthor: '', 
+            selectedAuthors: [], 
             books: [], 
-            authors: []
+            authors: [],
+            initBooks: []
         };
 
         this.handleChange = this.handleChange.bind(this);
     }
-
+    
     componentDidMount() {
         var _this = this;
         this.callApi()
@@ -26,7 +27,7 @@ class List extends Component {
                 }
             });
 
-            _this.setState({books: listBooks, authors: listAuthor});
+            _this.setState({books: listBooks, authors: listAuthor, initBooks: listBooks.slice(0)});
           })
           .catch(err => console.log(err));
       }
@@ -40,8 +41,36 @@ class List extends Component {
         return body;
     };
 
-    handleChange(event) {
-        this.setState({selectedAuthor: event.target.value});
+    filterBooks(){
+        var selectedAuthors = this.state.selectedAuthors;
+
+        if(selectedAuthors.length == 0){
+            this.setState({books: this.state.initBooks});
+            return;
+        }
+
+        var books = this.state.initBooks;
+        var newBooks = [];
+        
+        selectedAuthors.forEach(a => {
+            books.forEach(b => {
+                if(b.author == a){
+                    newBooks.push(b);
+                }
+            });
+        });
+
+        this.setState({books: newBooks});
+    }
+
+    handleChange(event) {      
+        var selectedAuthors = this.state.selectedAuthors;
+        var pos = selectedAuthors.indexOf(event.target.value);
+
+        pos === -1 ? selectedAuthors.push(event.target.value) : selectedAuthors.splice(pos, 1);
+
+        this.setState({selectedAuthors: selectedAuthors});
+        this.filterBooks(); 
     }
 
     render(){

@@ -174,3 +174,20 @@ h4{
   cursor:pointer;
   padding:10px 15px 20px;
 }
+
+.money{
+  color: #8f11b5;
+  font-size: 13px;
+  font-weight: bold;
+  margin:0px 20px 10px;
+}
+
+.hide{
+  display: none !important;
+}
+
+.empty-message{
+  width: 100;
+  text-align: center;
+  font-size: 24px;
+}
